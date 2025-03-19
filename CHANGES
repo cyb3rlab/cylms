@@ -1,4 +1,16 @@
 
+CyLMS v1.2
+----------
+* Fixed some issues in the SCORM package template that could cause
+  answers not to be registered correctly in Moodle under some
+  circumstances
+* Created a new sample Moodle VM (Ubuntu 24.04.1 LTS OS, Moodle v4.5)
+  to replace the old CentOS 7 based sample VM
+* Updated the source code to match the settings in the new sample
+  Moodle VM
+* Converted the source code to Python 3; support for Python 2 was
+  dropped
+
 CyLMS v1.1
 ----------
 * Added support for cyber range access via VNC by displaying a button

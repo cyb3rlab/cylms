@@ -31,7 +31,7 @@ The following steps are required in order to set up CyLMS:
    [release](https://github.com/crond-jaist/cylms/releases) of CyLMS
    on GitHub:
 
-   - `create scorm template.sh`: Self-extractable archive for
+   - `create_scorm_template.sh`: Self-extractable archive for
      creating a SCORM package template
    - `moodle.tgz`: Archive containing the sample Moodle VM that can be
      used to get started with CyLMS
@@ -88,7 +88,7 @@ Guide.
 In addition to the source code, some sample files are included for
 your convenience:
 
-* `demo quiz.yml` and `training_example.yml`: Example training content
+* `demo_quiz.yml` and `training_example.yml`: Example training content
   files; for details about the training content representation used in
   CyLMS see the User Guide
 * `config_example`: Example configuration file with settings regarding
