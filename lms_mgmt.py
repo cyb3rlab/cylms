@@ -26,7 +26,7 @@ SSH_OPT1 = "-o UserKnownHostsFile=/dev/null"
 SSH_OPT2 = "-o StrictHostKeyChecking=no"
 
 ## Moosh-related constants
-MOOSH_COMMAND = "/root/moosh/moosh.php -p /var/www/html/moodle/"
+MOOSH_COMMAND = "/root/moosh/moosh.php -p /moodle/"
 ACTIVITY_ID_FIELD = "cmid="
 ### Constants below are based on values from /var/www/html/moodle/mod/scorm/locallib.php
 ### (and from /var/www/html/moodle/lang/en/moodle.php for showdescription)
@@ -83,6 +83,7 @@ class LmsManager:
 
             # Find the appropriate course
             for output_line in ssh_output.splitlines():
+                output_line = output_line.decode('utf-8')
                 # Extract the course id
                 if self.course_name in output_line:
                     logging.debug("Matching course info: {}".format(output_line.rstrip()))
@@ -129,6 +130,7 @@ class LmsManager:
 
                     # Determine the activity id
                     for output_line in ssh_output.splitlines():
+                        output_line = output_line.decode('utf-8')
                         # Extract the activity id from cmid line
                         if ACTIVITY_ID_FIELD in output_line:
                             activity_id = output_line.split("=")[1]

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #############################################################################
 # Configuration wizard for CyLMS
@@ -8,7 +8,7 @@
 import logging
 import subprocess
 import sys
-import ConfigParser
+import configparser
 import os
 
 # Internal imports
@@ -23,7 +23,7 @@ from storyboard import Storyboard
 
 # Command to check whether pip is installed, and to install it (on Ubuntu)
 PIP_CHECK_CMD = ["which", "pip"]
-PIP_INSTALL_CMD = ["sudo", "apt", "install", "python-pip"]
+PIP_INSTALL_CMD = ["sudo", "apt", "install", "python3-pip"]
 
 # Dictionary of required modules and their package names
 REQUIRED_PKGS = {"yaml": "PyYAML"}
@@ -53,7 +53,7 @@ TEMPLATE_SCRIPT = "create_scorm_template.sh"
 
 DEFAULT_FILENAME = "config_file"
 DEFAULT_LMS_HOST = "root@192.168.122.232"
-DEFAULT_LMS_REPOSITORY = "/var/moodledata/repository/training_content/"
+DEFAULT_LMS_REPOSITORY = "/moodle/moodledata/repository/training_content/"
 DEFAULT_COURSE_NAME = "CyTrONE Training"
 DEFAULT_SECTION_ID = "0"
 DEFAULT_ENABLE_VNC = "true"
@@ -141,13 +141,13 @@ def create_template(step_no, proxy_server):
     cylms_path_detected = os.path.dirname(os.path.realpath(__file__))
 
     # CyLMS path
-    cylms_path = raw_input("  - Enter the CyLMS installation path (detected '{}'): ".format(cylms_path_detected))
+    cylms_path = input("  - Enter the CyLMS installation path (detected '{}'): ".format(cylms_path_detected))
     if not cylms_path:
         cylms_path = cylms_path_detected
     logging.debug("{} = {}".format("CyLMS path", cylms_path))
 
     # Template directory
-    template_path = raw_input("  - Enter the SCORM template creation script path (default is '{}'): ".format(cylms_path_detected))
+    template_path = input("  - Enter the SCORM template creation script path (default is '{}'): ".format(cylms_path_detected))
     if not template_path:
         template_path = cylms_path_detected
     template_script = template_path + "/" + TEMPLATE_SCRIPT
@@ -185,53 +185,53 @@ def create_template(step_no, proxy_server):
 def generate_config(step_no):
     print("\n* STEP {}: Generating the configuration file...".format(step_no))
 
-    config = ConfigParser.SafeConfigParser()
+    config = configparser.ConfigParser()
     config.add_section(Storyboard.CONFIG_SECTION)
 
     # Get lms_host
-    value = raw_input("  - Enter the host name or IP of the LMS host (default is '{}'): ".format(DEFAULT_LMS_HOST))
+    value = input("  - Enter the host name or IP of the LMS host (default is '{}'): ".format(DEFAULT_LMS_HOST))
     if not value:
         value = DEFAULT_LMS_HOST
     logging.debug("{} = {}".format(Storyboard.CONFIG_LMS_HOST, value))
     config.set(Storyboard.CONFIG_SECTION, Storyboard.CONFIG_LMS_HOST, value)
 
     # Get lms_repository
-    value = raw_input("  - Enter the LMS repository (default is '{}'): ".format(DEFAULT_LMS_REPOSITORY))
+    value = input("  - Enter the LMS repository (default is '{}'): ".format(DEFAULT_LMS_REPOSITORY))
     if not value:
         value = DEFAULT_LMS_REPOSITORY
     logging.debug("{} = {}".format(Storyboard.CONFIG_LMS_REPOSITORY, value))
     config.set(Storyboard.CONFIG_SECTION, Storyboard.CONFIG_LMS_REPOSITORY, value)
 
     # Get course_name
-    value = raw_input("  - Enter the LMS course name for uploaded activities (default is '{}'): ".format(DEFAULT_COURSE_NAME))
+    value = input("  - Enter the LMS course name for uploaded activities (default is '{}'): ".format(DEFAULT_COURSE_NAME))
     if not value:
         value = DEFAULT_COURSE_NAME
     logging.debug("{} = {}".format(Storyboard.CONFIG_COURSE_NAME, value))
     config.set(Storyboard.CONFIG_SECTION, Storyboard.CONFIG_COURSE_NAME, value)
 
     # Get section_id
-    value = raw_input("  - Enter the LMS section id for uploaded activities (default is '{}'): ".format(DEFAULT_SECTION_ID))
+    value = input("  - Enter the LMS section id for uploaded activities (default is '{}'): ".format(DEFAULT_SECTION_ID))
     if not value:
         value = DEFAULT_SECTION_ID
     logging.debug("{} = {}".format(Storyboard.CONFIG_SECTION_ID, value))
     config.set(Storyboard.CONFIG_SECTION, Storyboard.CONFIG_SECTION_ID, value)
 
     # Get enable_vnc
-    value = raw_input("  - Enable cyber range access via VNC (default is '{}'): ".format(DEFAULT_ENABLE_VNC))
+    value = input("  - Enable cyber range access via VNC (default is '{}'): ".format(DEFAULT_ENABLE_VNC))
     if not value:
         value = DEFAULT_ENABLE_VNC
     logging.debug("{} = {}".format(Storyboard.CONFIG_ENABLE_VNC, value))
     config.set(Storyboard.CONFIG_SECTION, Storyboard.CONFIG_ENABLE_VNC, value)
 
     # Get range_directory
-    value = raw_input("  - Enter the cyber range directory (default is '{}'): ".format(DEFAULT_RANGE_DIRECTORY))
+    value = input("  - Enter the cyber range directory (default is '{}'): ".format(DEFAULT_RANGE_DIRECTORY))
     if not value:
         value = DEFAULT_RANGE_DIRECTORY
     logging.debug("{} = {}".format(Storyboard.CONFIG_RANGE_DIRECTORY, value))
     config.set(Storyboard.CONFIG_SECTION, Storyboard.CONFIG_RANGE_DIRECTORY, value)
 
     # Get configuration file name
-    value = raw_input("  - Ready to save configuration file => enter its name (default is '{}'): ".format(DEFAULT_FILENAME))
+    value = input("  - Ready to save configuration file => enter its name (default is '{}'): ".format(DEFAULT_FILENAME))
     if not value:
         value = DEFAULT_FILENAME
     logging.debug("Configuration file = {}".format(value))
@@ -256,7 +256,7 @@ def setup_moodle(step_no):
     cylms_path_detected = os.path.dirname(os.path.realpath(__file__))
 
     # Get path for Moodle VM files
-    moodle_path = raw_input("  - Enter the Moodle VM definition and disk image file path (default is '{}'): ".format(cylms_path_detected))
+    moodle_path = input("  - Enter the Moodle VM definition and disk image file path (default is '{}'): ".format(cylms_path_detected))
     if not moodle_path:
         moodle_path = cylms_path_detected
 

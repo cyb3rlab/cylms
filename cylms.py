@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 #############################################################################
 # Main file of the CyLMS set of tools for LMS-based cybersecurity training
@@ -40,17 +40,17 @@ SESSION_ID_DEFAULT = "N"
 
 # Print usage information
 def usage():
-    print "\nOVERVIEW: CyLMS set of tools for cybersecurity training support in Learning Management Systems (LMS).\n"
-    print "USAGE: cylms.py [options]\n"
-    print "OPTIONS:"
-    print "-h, --help                     Display this help message and exit"
-    print "-c, --convert-content <FILE>   Convert training content file to SCORM package"
-    print "-f, --config-file <CONFIG>     Set configuration file for LMS integration tasks"
-    print "                               NOTE: Required for both actions below"
-    print "-a, --add-to-lms <SESSION_NO>  Add converted package to LMS using session number"
-    print "                               NOTE: Usable only together with 'convert-content'"
-    print "-r, --remove-from-lms <NO,ID>  Remove session with given number and activity id"
-    print "-v, --vnc-setup <SESSION_NO>   Setup VNC service for accessing the cyber range\n"
+    print ("\nOVERVIEW: CyLMS set of tools for cybersecurity training support in Learning Management Systems (LMS).\n")
+    print ("USAGE: cylms.py [options]\n")
+    print ("OPTIONS:")
+    print ("-h, --help                     Display this help message and exit")
+    print ("-c, --convert-content <FILE>   Convert training content file to SCORM package")
+    print ("-f, --config-file <CONFIG>     Set configuration file for LMS integration tasks")
+    print ("                               NOTE: Required for both actions below")
+    print ("-a, --add-to-lms <SESSION_NO>  Add converted package to LMS using session number")
+    print ("                               NOTE: Usable only together with 'convert-content'")
+    print ("-r, --remove-from-lms <NO,ID>  Remove session with given number and activity id")
+    print ("-v, --vnc-setup <SESSION_NO>   Setup VNC service for accessing the cyber range\n")
 
 
 #############################################################################
@@ -206,7 +206,7 @@ def main(args):
                     # Check whether copy package operation was successful
                     if success_status:
                         # If copy was successful, we add a corresponding activity to LMS
-                        activity_name = ACTIVITY_NAME_FORMAT.format(session_id, training_title.encode('utf-8'))
+                        activity_name = ACTIVITY_NAME_FORMAT.format(session_id, training_title)
                         activity_description=ACTIVITY_DESCRIPTION_FORMAT.format(time.strftime("%Y-%m-%d %H:%M:%S"))
                         activity_id = lms_manager.add_activity(activity_name, activity_description, target_file)
                         # Check whether adding the activity was successful

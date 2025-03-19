@@ -65,44 +65,44 @@ def add_question(question_file, question_file_temp, question_id, question_body,
     temp = io.open(question_file_temp,'ab')
 
     # Replace content in template file
-    content = my_f.read().encode('utf-8')
+    content = my_f.read()
     # Convert int to unicode
     temp_list = [question_id, question_body, question_type, question_answer, question_correct_answer, question_objective_id]
     for counter, i in enumerate(temp_list):
-        if isinstance(i, int): 
-            temp_list[counter] = str(i).encode('utf-8') 
+        if isinstance(i, int):
+            temp_list[counter] = str(i)
     question_id, question_body, question_type, question_answer, question_correct_answer, question_objective_id = temp_list
 
     # Pre-processing of question fields
     # Change symbol " to \" to avoid errors in HTML, then avoid the case \\
     # Output goes to 'Playing/questions.js'
-    if DEBUG: print "---------------------------------------------------------"
+    if DEBUG: print ("---------------------------------------------------------")
     ## Process question id
-    if DEBUG: print "- Question id: ORIGINAL: " + question_id
-    question_id = question_id.encode('utf-8').replace('"','\\"').replace('\\\\','\\')
-    if DEBUG: print "  Question id: ENCODED : " + question_id
+    if DEBUG: print ("- Question id: ORIGINAL: " + question_id)
+    question_id = question_id.replace('"','\\"').replace('\\\\','\\')
+    if DEBUG: print ("  Question id: ENCODED : " + question_id)
     ## Process question body
-    if DEBUG: print "- Question body: ORIGINAL: " + question_body
-    question_body = question_body.encode('utf-8').replace('"','\\"').replace('\\\\','\\')
-    if DEBUG: print "  Question body: ENCODED : " + question_body
+    if DEBUG: print ("- Question body: ORIGINAL: " + question_body)
+    question_body = question_body.replace('"','\\"').replace('\\\\','\\')
+    if DEBUG: print ("  Question body: ENCODED : " + question_body)
     ## Process question type
-    question_type = question_type.encode('utf-8').replace('"','\\"').replace('\\\\','\\')
+    question_type = question_type.replace('"','\\"').replace('\\\\','\\')
     ## Process question answer
-    if DEBUG: print "- Question answer: ORIGINAL: " + question_correct_answer
-    question_correct_answer = question_correct_answer.encode('utf-8').replace('"','\\"').replace('\\\\','\\')
-    if DEBUG: print "  Question answer: ENCODED : " + question_correct_answer
+    if DEBUG: print ("- Question answer: ORIGINAL: " + question_correct_answer)
+    question_correct_answer = question_correct_answer.replace('"','\\"').replace('\\\\','\\')
+    if DEBUG: print ("  Question answer: ENCODED : " + question_correct_answer)
     ## Process choices for multiple-choice questions
-    if DEBUG: print "- Question choices: ORIGINAL: " + str(question_answer)
+    if DEBUG: print ("- Question choices: ORIGINAL: " + str(question_answer))
     ### Create choice data appropriate for inclusion in JavaScript file
     choice_data = build_choice_data(question_answer)
-    if DEBUG: print "  Question choices: ENCODED: " + choice_data
+    if DEBUG: print ("  Question choices: ENCODED: " + choice_data)
     ## ObjectiveId is predefined as 'obj_playing' and should not be changed (see above), so do nothing
-    #question_objective_id = question_objective_id.encode('utf-8').replace('"','\\"').replace('\\\\','\\')
+    #question_objective_id = question_objective_id.replace('"','\\"').replace('\\\\','\\')
     ## Process hints
     for i in range(0,len(hints)):
-        if DEBUG: print "- Hint #" + str(i+1) +": ORIGINAL: " + hints[i]
-        hints[i] = hints[i].encode('utf-8').replace('"','\\"').replace('\\\\','\\')
-        if DEBUG: print "  Hint #" + str(i+1) +": ENCODED : " + hints[i]
+        if DEBUG: print ("- Hint #" + str(i+1) +": ORIGINAL: " + hints[i])
+        hints[i] = hints[i].replace('"','\\"').replace('\\\\','\\')
+        if DEBUG: print ("  Hint #" + str(i+1) +": ENCODED : " + hints[i])
 
     # Insert information into the overall 'content' object
     ## Add question id
@@ -126,7 +126,7 @@ def add_question(question_file, question_file_temp, question_id, question_body,
     content = re.sub('".*{}.*"'.format(Storyboard.TAG_QUESTION_HINT),'""',content)
 
     logging.debug("Content: "+content)
-    temp.write(content)
+    temp.write(content.encode('utf-8'))
     my_f.close()
     temp.close()
 
@@ -189,7 +189,7 @@ def build_choice_data(question_choices):
         # Build choice data string appropriate for JavaScript
         choice_data = ""
         for option in option_list2:
-            choice_data += (option.encode('utf-8') + ", ")
+            choice_data += (option + ", ")
 
         # Remove the last unnecessary comma and space
         choice_data=choice_data[:-2]
@@ -211,10 +211,10 @@ def add_information(start_file, start_file_temp, manifest_file,
 
     content = file.read()
     idText = str(id)
-    content = content.replace(Storyboard.TAG_TRAINING_ID, idText.encode('utf-8'))
+    content = content.replace(Storyboard.TAG_TRAINING_ID, idText)
 
     logging.debug("Content: " + content)
-    temp.write(content)
+    temp.write(content.encode('utf-8'))
     file.close()
     temp.close()
 
@@ -223,16 +223,16 @@ def add_information(start_file, start_file_temp, manifest_file,
     temp = io.open(start_file_temp,'ab')
 
     # Get file content
-    content = file.read().encode('utf-8')
+    content = file.read()
     # Build the level text
     if level:
-        level_text = "Level {0}: ".format(str(level).encode('utf-8'))
+        level_text = "Level {0}: ".format(str(level))
     else:
         level_text = ""
 
     # Replace special tags with actual content
     # Output goes to 'shared/assessmenttemplate.html'
-    if DEBUG: print "---------------------------------------------------------"
+    if DEBUG: print ("---------------------------------------------------------")
     ## Show range button tag is predefined, so no encoding needed
     ## NOTE: We show the range button in SCORM if VNC access is enabled
     content = content.replace(Storyboard.TAG_SHOW_RANGE_BUTTON, str(enable_vnc).lower())
@@ -240,12 +240,12 @@ def add_information(start_file, start_file_temp, manifest_file,
     content = content.replace(Storyboard.TAG_TRAINING_LEVEL, level_text)
     ## Training title
     if DEBUG: print("- Training title: ORIGINAL: '{}'".format(description))
-    training_title = description.encode('utf-8').replace('"','\\"').replace('\\\\','\\')
+    training_title = description.replace('"','\\"').replace('\\\\','\\')
     if DEBUG: print("- Training title: ENCODED : '{}'".format(training_title))
     content = content.replace(Storyboard.TAG_TRAINING_TITLE, training_title)
     ## Training overview: need to strip trailing white spaces to make a correct HTML file
     if DEBUG: print("- Training overview: ORIGINAL: '{}'".format(header))
-    training_overview = header.rstrip().encode('utf-8').replace('"','\\"').replace('\\\\','\\')
+    training_overview = header.rstrip().replace('"','\\"').replace('\\\\','\\')
     training_overview = '<br>'.join(training_overview.splitlines())
     if DEBUG: print("- Training overview: ENCODED : '{}'".format(training_overview))
     content = content.replace(Storyboard.TAG_TRAINING_OVERVIEW, training_overview)
@@ -265,10 +265,10 @@ def add_information(start_file, start_file_temp, manifest_file,
                 logging.error("Failed to get cyber range info => abort VNC server stopping")
     if DEBUG: print("- Port & file name: '{}'".format(port_filename))
     content = content.replace(Storyboard.TAG_PORT_FILENAME, port_filename)
-    if DEBUG: print "---------------------------------------------------------"
+    if DEBUG: print ("---------------------------------------------------------")
 
     logging.debug("Content: " + content)
-    temp.write(content)
+    temp.write(content.encode('utf-8'))
     file.close()
     temp.close()
 
@@ -505,4 +505,3 @@ def main():
 #############################################################################
 if __name__ == "__main__":
     main()
-

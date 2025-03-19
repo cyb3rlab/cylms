@@ -5,7 +5,7 @@
 
 # External imports
 import logging
-import ConfigParser
+import configparser
 import sys
 
 # Internal imports
@@ -20,7 +20,7 @@ class CfgManager:
     # Constructor
     def __init__(self, config_file):
         # Initialize configuration parser from config_file
-        self.config_parser = ConfigParser.ConfigParser()
+        self.config_parser = configparser.ConfigParser()
         logging.debug("Initialize configuration manager from file '{}'.".format(config_file))
         config_file_list = self.config_parser.read(config_file)
         # Check whether the configuration file could be read 
